@@ -1,12 +1,12 @@
 CircleCI Demo Android
 =================
-[![CircleCI](https://circleci.com/gh/tadashi0713/circleci-demo-android/tree/master.svg?style=svg)](https://circleci.com/gh/tadashi0713/circleci-demo-android/tree/master)
+[![CircleCI](https://circleci.com/gh/CircleCI-Research/circleci-demo-android/tree/main.svg?style=svg)](https://circleci.com/gh/CircleCI-Research/circleci-demo-android/tree/main)
 
 Demo for CI/CD pipeline for Android Native app using CircleCI.
 
 Forked from [Sunflower App](https://github.com/android/sunflower).
 
-You can see [config file here](https://github.com/tadashi0713/circleci-demo-android/blob/master/.circleci/config.yml).
+You can see [config file here](https://github.com/CircleCI-Research/circleci-demo-android/blob/master/.circleci/config.yml).
 
 * Use [Android Orb](https://circleci.com/developer/ja/orbs/orb/circleci/android) to 
   * Set [Android Machine Executor](https://circleci.com/docs/2.0/android-machine-image/)
