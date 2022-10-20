@@ -20,7 +20,7 @@ platform :android do
   lane :beta do
     gradle(task: "assembleDebug")
     firebase_app_distribution(
-      app: "1:787598641095:android:d25d2defba93ec69bb7be2"
+      app: "1:827834891062:android:f2765953b9323087251197"
     )
   end
 end
