@@ -89,4 +89,4 @@ workflows:
           filters: # Filter Branch
             branches:
               only:
-                - master
+                - main
