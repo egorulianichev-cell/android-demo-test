@@ -4,6 +4,9 @@ CircleCI Demo Android
 
 Demo for CI/CD pipeline for Android Native app using CircleCI.
 
+Please follow this guide when cloning the project:
+[Android Development on CircleCI](https://circleci.atlassian.net/wiki/spaces/CE/pages/6696140880)
+
 Forked from [Sunflower App](https://github.com/android/sunflower).
 
 You can see [config file here](https://github.com/CircleCI-Research/circleci-demo-android/blob/master/.circleci/config.yml).
