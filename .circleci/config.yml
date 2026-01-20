@@ -10,7 +10,7 @@ jobs:
     executor:
       name: android/android_docker # Docker Executor
       resource_class: xlarge
-      tag: 2022.06.1
+      tag: 2026.01.1
     steps:
       - checkout
       - android/restore_gradle_cache
@@ -21,7 +21,7 @@ jobs:
     executor:
       name: android/android_docker # Docker Executor
       resource_class: xlarge
-      tag: 2022.06.1
+      tag: 2026.01.1
     steps:
       - checkout
       - android/restore_gradle_cache
@@ -34,7 +34,7 @@ jobs:
     executor:
       name: android/android_docker # Docker Executor
       resource_class: xlarge
-      tag: 2022.06.1
+      tag: 2026.01.1
     parallelism: 4
     steps:
       - checkout
@@ -57,7 +57,7 @@ jobs:
     executor:
       name: android/android_machine # Machine Executor
       resource_class: xlarge
-      tag: 2022.12.1
+      tag: 2026.01.1
     steps:
       - checkout
       - android/start_emulator_and_run_tests
@@ -68,7 +68,7 @@ jobs:
     executor:
       name: android/android_docker # Docker Executor
       resource_class: xlarge
-      tag: 2025.12.1
+      tag: 2026.01.1
     steps:
       - checkout
       - android/restore_gradle_cache
