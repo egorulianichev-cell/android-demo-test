@@ -57,7 +57,7 @@ jobs:
     executor:
       name: android/android_machine # Machine Executor
       resource_class: xlarge
-      tag: 2022.06.1
+      tag: 2022.12.1
     steps:
       - checkout
       - android/start_emulator_and_run_tests
