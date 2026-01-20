@@ -2,8 +2,8 @@ version: 2.1
 
 # Orbs
 orbs:
-  android: circleci/android@2.1.2
-  ruby: circleci/ruby@1.8.0
+  android: circleci/android@3.2.0
+  ruby: circleci/ruby@2.6.0
 
 jobs:
   lint:
@@ -68,7 +68,7 @@ jobs:
     executor:
       name: android/android-docker # Docker Executor
       resource-class: xlarge
-      tag: 2022.06.1
+      tag: 2025.01.19
     steps:
       - checkout
       - android/restore-gradle-cache
@@ -80,10 +80,19 @@ workflows:
   main:
     jobs:
       - lint
-      - unit_test
-      - unit_test_parallel
-      - integration_test
+      - unit_test:
+          requires:
+            - lint
+      - unit_test_parallel:
+          requires:
+            - lint
+      - integration_test:
+          requires:
+            - unit_test
+            - unit_test_parallel
       - beta:
+          requires:
+            - integration_test
           context: # Context
             - mobile
           filters: # Filter Branch
