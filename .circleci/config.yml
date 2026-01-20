@@ -1,4 +1,4 @@
-version: 2.1
+versi25.10.1
 
 # Orbs
 orbs:
@@ -10,7 +10,7 @@ jobs:
     executor:
       name: android/android_docker # Docker Executor
       resource_class: xlarge
-      tag: 2022.06.1
+      tag: 2025.10.1
     steps:
       - checkout
       - android/restore_gradle_cache
@@ -21,7 +21,7 @@ jobs:
     executor:
       name: android/android_docker # Docker Executor
       resource_class: xlarge
-      tag: 2022.06.1
+      tag: 2025.10.1
     steps:
       - checkout
       - android/restore_gradle_cache
@@ -34,7 +34,7 @@ jobs:
     executor:
       name: android/android_docker # Docker Executor
       resource_class: xlarge
-      tag: 2022.06.1
+      tag: 2025.10.1
     parallelism: 4
     steps:
       - checkout
@@ -46,7 +46,7 @@ jobs:
               | sed 's/.kt//' \
               | circleci tests split --split-by=timings --timings-type=classname)
             cd ../../../../
-            GRADLE_ARGS=$(echo $CLASSNAMES | awk '{for (i=1; i<=NF; i++) print "--tests",$i}')
+            GRADLE_ARGS=$(echo $CLASSNAMES | awk '{f25.10.1; i<=NF; i++) print "--tests",$i}')
             echo "Prepared arguments for Gradle: $GRADLE_ARGS"
             ./gradlew testDebugUnitTest $GRADLE_ARGS -Pcircleci
       - android/save_gradle_cache
@@ -57,7 +57,7 @@ jobs:
     executor:
       name: android/android_machine # Machine Executor
       resource_class: xlarge
-      tag: 2022.06.1
+      tag: 2025.10.1
     steps:
       - checkout
       - android/start_emulator_and_run_tests
@@ -68,7 +68,7 @@ jobs:
     executor:
       name: android/android_docker # Docker Executor
       resource_class: xlarge
-      tag: 2022.06.1
+      tag: 2025.10.1
     steps:
       - checkout
       - android/restore_gradle_cache
