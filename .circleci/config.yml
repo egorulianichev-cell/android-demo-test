@@ -24,9 +24,9 @@ jobs:
       tag: 2022.06.1
     steps:
       - checkout
-      - android/restore-gradle-cache
+      - android/restore_gradle_cache
       - run: ./gradlew testDebugUnitTest
-      - android/save-gradle-cache
+      - android/save_gradle_cache
       - store_test_results: # Upload Test Results(Test Insights)
           path: ./app/build/test-results/testDebugUnitTest
 
