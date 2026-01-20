@@ -8,7 +8,7 @@ orbs:
 jobs:
   lint:
     executor:
-      name: android/android-docker # Docker Executor
+      name: android/android_docker # Docker Executor
       resource-class: xlarge
       tag: 2022.06.1
     steps:
@@ -19,7 +19,7 @@ jobs:
 
   unit_test:
     executor:
-      name: android/android-docker # Docker Executor
+      name: android/android_docker # Docker Executor
       resource-class: xlarge
       tag: 2022.06.1
     steps:
@@ -32,7 +32,7 @@ jobs:
 
   unit_test_parallel:
     executor:
-      name: android/android-docker # Docker Executor
+      name: android/android_docker # Docker Executor
       resource-class: xlarge
       tag: 2022.06.1
     parallelism: 4
@@ -55,7 +55,7 @@ jobs:
 
   integration_test:
     executor:
-      name: android/android-machine # Machine Executor
+      name: android/android_machine # Machine Executor
       resource-class: xlarge
       tag: 2022.06.1
     steps:
@@ -66,7 +66,7 @@ jobs:
 
   beta:
     executor:
-      name: android/android-docker # Docker Executor
+      name: android/android_docker # Docker Executor
       resource-class: xlarge
       tag: 2025.01.19
     steps:
