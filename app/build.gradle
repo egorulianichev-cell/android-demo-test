@@ -22,11 +22,13 @@ apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
+    namespace 'com.google.samples.apps.sunflower'
     buildFeatures {
         dataBinding true
+        buildConfig true
     }
     defaultConfig {
-        applicationId "com.custengjapac.mokumoku202210"
+        applicationId "com.custengsupport.eulianichev20260119"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         testInstrumentationRunner "com.google.samples.apps.sunflower.utilities.MainTestRunner"
