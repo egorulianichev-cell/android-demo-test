@@ -46,8 +46,8 @@ jobs:
               | sed 's/.kt//' \
               | circleci tests split --split-by=timings --timings-type=classname)
             cd ../../../../
-            GRADLE_ARGS=$(echo $CLASSNAMES | awk '{f25.10.1; i<=NF; i++) print "--tests",$i}'
-            echo "Prepared arguments for Gradle: $GRADLE_ARGS")
+            GRADLE_ARGS=$(echo $CLASSNAMES | awk '{f25.10.1; i<=NF; i++) print "--tests",$i}')
+            echo "Prepared arguments for Gradle: $GRADLE_ARGS"
             ./gradlew testDebugUnitTest $GRADLE_ARGS -Pcircleci
       - android/save_gradle_cache
       - store_test_results: # Upload Test Results(Test Insights)
