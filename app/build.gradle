@@ -27,6 +27,12 @@ android {
         dataBinding true
         buildConfig true
     }
+
+     lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+    
     defaultConfig {
         applicationId "com.custengsupport.eulianichev20260119"
         minSdkVersion rootProject.minSdkVersion

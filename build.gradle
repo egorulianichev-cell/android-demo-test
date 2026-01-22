@@ -52,11 +52,7 @@ buildscript {
         workVersion = '2.4.0'
     }
 
-    lint {
-        abortOnError false
-        checkReleaseBuilds false
-    }
-
+   
     repositories {
         google()
         mavenCentral()
