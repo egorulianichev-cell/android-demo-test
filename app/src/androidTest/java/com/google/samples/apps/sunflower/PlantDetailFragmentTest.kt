@@ -28,9 +28,9 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasType
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.rule.ActivityTestRule
 import com.google.samples.apps.sunflower.utilities.chooser
 import com.google.samples.apps.sunflower.utilities.testPlant
 import org.hamcrest.CoreMatchers.allOf
@@ -45,22 +45,20 @@ class PlantDetailFragmentTest {
 
     @Rule
     @JvmField
-    val activityTestRule = ActivityTestRule(GardenActivity::class.java)
+    val activityScenarioRule = ActivityScenarioRule(GardenActivity::class.java)
 
     @Before
     fun jumpToPlantDetailFragment() {
-        activityTestRule.activity.apply {
-            runOnUiThread {
-                val bundle = Bundle().apply { putString("plantId", testPlant.plantId) }
-                findNavController(R.id.nav_host).navigate(R.id.plant_detail_fragment, bundle)
-            }
+        activityScenarioRule.scenario.onActivity { activity ->
+            val bundle = Bundle().apply { putString("plantId", testPlant.plantId) }
+            activity.findNavController(R.id.nav_host).navigate(R.id.plant_detail_fragment, bundle)
         }
     }
 
     @Ignore("Share button redesign pending")
     @Test
     fun testShareTextIntent() {
-        val shareText = activityTestRule.activity.getString(
+        val shareText = InstrumentationRegistry.getInstrumentation().targetContext.getString(
             R.string.share_text_plant,
             testPlant.name
         )

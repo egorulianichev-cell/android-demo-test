@@ -23,9 +23,10 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
+import androidx.lifecycle.Lifecycle
 import com.google.samples.apps.sunflower.adapters.PlantAdapter
 import com.google.samples.apps.sunflower.databinding.FragmentPlantListBinding
 import com.google.samples.apps.sunflower.viewmodels.PlantListViewModel
@@ -48,22 +49,30 @@ class PlantListFragment : Fragment() {
         binding.plantList.adapter = adapter
         subscribeUi(adapter)
 
-        setHasOptionsMenu(true)
         return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_plant_list, menu)
-    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requireActivity().addMenuProvider(
+            object : MenuProvider {
+                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                    menuInflater.inflate(R.menu.menu_plant_list, menu)
+                }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.filter_zone -> {
-                updateData()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    return when (menuItem.itemId) {
+                        R.id.filter_zone -> {
+                            updateData()
+                            true
+                        }
+                        else -> false
+                    }
+                }
+            },
+            viewLifecycleOwner,
+            Lifecycle.State.RESUMED
+        )
     }
 
     private fun subscribeUi(adapter: PlantAdapter) {

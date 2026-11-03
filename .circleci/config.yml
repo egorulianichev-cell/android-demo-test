@@ -3,78 +3,91 @@ version: 2.1
 # Orbs
 orbs:
   android: circleci/android@3.2.0
-  ruby: circleci/ruby@2.6.0
+  ruby: circleci/ruby@4.0.0
+
+# The orb's default cache key only looks at build.gradle* and settings.gradle*, so dependency
+# bumps in the version catalog or a new Gradle wrapper would otherwise restore a stale cache.
+gradle_cache_find_args: &gradle_cache_find_args >-
+  . -name "build.gradle*" -o -name "settings.gradle*"
+  -o -name "libs.versions.toml" -o -name "gradle-wrapper.properties"
+
+executors:
+  android_docker:
+    docker:
+      - image: cimg/android:2026.10.1
+    resource_class: xlarge
+  android_machine:
+    machine:
+      image: android:2026.10.1
+    resource_class: xlarge
+
+commands:
+  restore_gradle_cache:
+    steps:
+      - android/restore_gradle_cache:
+          find_args: *gradle_cache_find_args
+  save_gradle_cache:
+    steps:
+      - android/save_gradle_cache
 
 jobs:
   lint:
-    executor:
-      name: android/android_docker # Docker Executor
-      resource_class: xlarge
-      tag: 2025.10.1
+    executor: android_docker
     steps:
       - checkout
-      - android/restore_gradle_cache
+      - restore_gradle_cache
       - run: ./gradlew lintDebug
-      - android/save_gradle_cache
+      - save_gradle_cache
+      - store_artifacts:
+          path: app/build/reports
+          destination: reports
 
   unit_test:
-    executor:
-      name: android/android_docker # Docker Executor
-      resource_class: xlarge
-      tag: 2025.10.1
+    executor: android_docker
     steps:
       - checkout
-      - android/restore_gradle_cache
+      - restore_gradle_cache
       - run: ./gradlew testDebugUnitTest
-      - android/save_gradle_cache
+      - save_gradle_cache
       - store_test_results: # Upload Test Results(Test Insights)
           path: ./app/build/test-results/testDebugUnitTest
 
   unit_test_parallel:
-    executor:
-      name: android/android_docker # Docker Executor
-      resource_class: xlarge
-      tag: 2025.10.1
+    executor: android_docker
     parallelism: 4
     steps:
       - checkout
-      - android/restore_gradle_cache
-      - run: |
-            cd app/src/test/java
-            CLASSNAMES=$(circleci tests glob "**/*Test.kt" \
-              | sed 's@/@.@g' \
-              | sed 's/.kt//' \
-              | circleci tests split --split-by=timings --timings-type=classname)
-            cd ../../../../
-            GRADLE_ARGS=$(echo $CLASSNAMES | awk '{for(i=1; i<=NF; i++) print "--tests",$i}')
-            echo "Prepared arguments for Gradle: $GRADLE_ARGS"
-            ./gradlew testDebugUnitTest $GRADLE_ARGS -Pcircleci
-      - android/save_gradle_cache
-      - store_test_results: # Upload Test Results(Test Insights)
-          path: ./app/build/test-results/testDebugUnitTest
+      - restore_gradle_cache
+      - run:
+          name: Smarter Testing doctor
+          command: circleci testsuite doctor "unit tests"
+      - run:
+          name: Run unit tests (Smarter Testing)
+          command: circleci testsuite run "unit tests"
+      - save_gradle_cache
+      - store_test_results: # Must match outputs.junit-directory in .circleci/test-suites.yml
+          path: test-results/unit
 
   integration_test:
-    executor:
-      name: android/android_machine # Machine Executor
-      resource_class: xlarge
-      tag: 2025.10.1
+    executor: android_machine
     steps:
       - checkout
-      - android/start_emulator_and_run_tests
+      - android/start_emulator_and_run_tests:
+          system_image: system-images;android-36;google_apis;x86_64
+          restore_gradle_cache_find_args: *gradle_cache_find_args
       - store_test_results: # Upload Test Results(Test Insights)
           path: ./app/build/outputs/androidTest-results/connected
 
   beta:
-    executor:
-      name: android/android_docker # Docker Executor
-      resource_class: xlarge
-      tag: 2025.10.1
+    executor: android_docker
     steps:
       - checkout
-      - android/restore_gradle_cache
+      - restore_gradle_cache
       - ruby/install-deps # Ruby(Fastlane)
       - run: bundle exec fastlane beta
-      - android/save_gradle_cache
+      - save_gradle_cache
+      - store_artifacts:
+          path: app/build/outputs/apk/debug/app-debug.apk
 
 workflows:
   main:
@@ -95,7 +108,4 @@ workflows:
             - integration_test
           context: # Context
             - mobile
-          filters: # Filter Branch
-            branches:
-              only:
-                - main
+          filters: pipeline.git.branch == "main"

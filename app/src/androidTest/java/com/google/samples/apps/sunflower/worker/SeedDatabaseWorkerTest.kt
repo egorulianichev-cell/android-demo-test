@@ -30,7 +30,7 @@ import androidx.work.workDataOf
 import com.google.samples.apps.sunflower.utilities.PLANT_DATA_FILENAME
 import com.google.samples.apps.sunflower.workers.SeedDatabaseWorker
 import org.hamcrest.CoreMatchers.`is`
-import org.junit.Assert.assertThat
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

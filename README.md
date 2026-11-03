@@ -22,22 +22,32 @@ You can see [config file here](https://github.com/CircleCI-Research/circleci-dem
 
 ![](./screenshots/cpu_usage.png)
 
-* [Running Unit Tests Parallel](https://circleci.com/docs/2.0/parallelism-faster-jobs/)
+* Run unit tests in parallel with [Smarter Testing](https://circleci.com/docs/guides/test/smarter-testing-overview/)
+  (`circleci testsuite run`, configured in `.circleci/test-suites.yml`): timing-based test splitting
+  and rerunning only failed tests
 
 
 ![](./screenshots/parallel.png)
 
-* Use [Context](https://circleci.com/docs/2.0/contexts/) for storing secrets(this time token for Firebase) for across projects.
-* Upload test results & visualize in [Test Insights](https://circleci.com/docs/2.0/insights-tests/).
+* Use [Context](https://circleci.com/docs/guides/security/contexts/) for storing secrets (Firebase
+  credentials) across projects. The `mobile` context needs either `FIREBASE_SERVICE_ACCOUNT_JSON`
+  (the content of a Google service account key, recommended) or `FIREBASE_TOKEN` (from `firebase login:ci`).
+* Upload test results & visualize in [Test Insights](https://circleci.com/docs/guides/insights/insights-tests/).
 
 Getting Started
 ---------------
+Requirements: JDK 17 or newer (21 recommended), Android SDK platform 37, Ruby 3.2 or newer for Fastlane.
+
+Toolchain: Android Gradle Plugin 9.5 (built-in Kotlin, KSP for Room and Hilt), Gradle 9.8, Kotlin 2.4.
+All versions live in the `gradle/libs.versions.toml` version catalog. The app targets API 36 and
+supports API 24 and higher.
+
 This project uses the Gradle build system. To build this project, use the
 `gradlew build` command or use "Import Project" in Android Studio.
 
 There are two Gradle tasks for testing the project:
-* `connectedAndroidTest` - for running Espresso on a connected device
-* `test` - for running unit tests
+* `connectedDebugAndroidTest` - for running Espresso on a connected device
+* `testDebugUnitTest` - for running unit tests
 
 ### Unsplash API key
 

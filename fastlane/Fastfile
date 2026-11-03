@@ -19,8 +19,10 @@ platform :android do
   desc "Submit a new Beta Build to Firebase App Distribution"
   lane :beta do
     gradle(task: "assembleDebug")
+    # Prefers a Google service account (JSON content in the context); falls back to FIREBASE_TOKEN when unset.
     firebase_app_distribution(
-      app: "1:1009063717109:android:caf084735ba70751883dbc"
+      app: "1:1009063717109:android:caf084735ba70751883dbc",
+      service_credentials_json_data: ENV["FIREBASE_SERVICE_ACCOUNT_JSON"]
     )
   end
 end

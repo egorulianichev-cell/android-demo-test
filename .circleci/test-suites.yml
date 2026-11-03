@@ -1,0 +1,11 @@
+name: unit tests
+# Test atoms are fully qualified test class names, which match the classname attribute in Gradle's JUnit XML.
+discover: find app/src/test/java -name '*Test.kt' | sed -e 's@^app/src/test/java/@@' -e 's@\.kt$@@' -e 's@/@.@g'
+run: |
+  status=0
+  ./gradlew testDebugUnitTest $(printf -- '--tests %s ' << test.atoms >>) || status=$?
+  mkdir -p "<< outputs.junit-directory >>"
+  cp app/build/test-results/testDebugUnitTest/*.xml "<< outputs.junit-directory >>"/ || true
+  exit $status
+outputs:
+  junit-directory: test-results/unit
