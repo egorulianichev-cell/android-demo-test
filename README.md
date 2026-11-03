@@ -2,7 +2,7 @@ CircleCI Demo Android
 =================
 [![CircleCI](https://circleci.com/gh/CircleCI-Research/circleci-demo-android/tree/main.svg?style=svg)](https://circleci.com/gh/CircleCI-Research/circleci-demo-android/tree/main)
 
-Demo for CI/CD pipeline for Android Native app using CircleCI.
+Demo for CI/CD pipeline for Android Native app using CircleCI v2026
 
 Please follow this guide when cloning the project:
 [Android Development on CircleCI](https://circleci.atlassian.net/wiki/spaces/CE/pages/6696140880)
