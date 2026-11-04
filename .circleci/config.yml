@@ -74,6 +74,9 @@ jobs:
       - checkout
       - android/start_emulator_and_run_tests:
           system_image: system-images;android-36;google_apis;x86_64
+          # circle-android wait-for-boot waits for the boot animation to finish; with -no-boot-anim
+          # it never runs on API 36 images, so the wait step loops until the job times out.
+          no_boot_anim: false
           restore_gradle_cache_find_args: *gradle_cache_find_args
       - store_test_results: # Upload Test Results(Test Insights)
           path: ./app/build/outputs/androidTest-results/connected
